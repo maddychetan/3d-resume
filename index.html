@@ -131,19 +131,24 @@
       display: flex; gap: 24px; align-items: center;
       pointer-events: none; z-index: 10;
     }
-    .status-item {
-      display: flex; align-items: center; gap: 6px;
-      font-family: 'Orbitron', monospace; font-size: 0.5rem;
-      color: rgba(40,170,255,0.4); letter-spacing: 0.1em;
-    }
-    .status-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; box-shadow: 0 0 6px currentColor; }
-      50% { opacity: 0.3; box-shadow: none; }
-    }
+   .status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;            /* was 0.5rem → slightly bigger */
+  color: #ffffff;               /* white */
+
+  letter-spacing: 0.1em;        /* keep same spacing */
+}
+  .status-dot {
+  width: 6px;                   /* was 5px → slightly bigger */
+  height: 6px;
+  border-radius: 50%;
+
+  animation: pulse-dot 2s ease-in-out infinite;
+}
 
     /* ── Avatar / Profile visual ── */
     #avatar-container {
