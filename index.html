@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chetan Holiyappa</title>
 
 <style>
@@ -19,7 +19,6 @@ body {
   position: fixed;
   top: 30px;
   left: 80px;
-  z-index: 10;
 }
 
 #header h1 {
@@ -65,57 +64,31 @@ body {
   font-size: 0.8rem;
 }
 
-/* ===== FINAL PANEL UI ===== */
+/* PANEL */
 #panel {
   position: fixed;
   top: 0;
   right: -420px;
   width: 420px;
   height: 100%;
-  background: rgba(10, 15, 35, 0.85);
+  background: rgba(10, 15, 35, 0.9);
   backdrop-filter: blur(18px);
-  border-left: 1px solid rgba(255,255,255,0.08);
-  transition: right 0.4s ease;
-  z-index: 50;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
+  transition: 0.4s;
+  padding: 25px;
 }
 
 #panel.active {
   right: 0;
 }
 
-#panel-content {
-  margin-top: 40px;
-  overflow-y: auto;
-}
-
 #close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  right: 10px;
+  top: 10px;
   border: none;
   background: none;
   color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-#panel h2 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-
-#panel p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: rgba(255,255,255,0.8);
-}
-
-#panel a {
-  color: #2af;
-  text-decoration: none;
+  font-size: 18px;
 }
 </style>
 </head>
@@ -127,7 +100,7 @@ body {
 </div>
 
 <div id="top-links">
-  <a href="https://www.linkedin.com/in/caholiyappa/" target="_blank">LINKEDIN</a>
+  <a href="https://www.linkedin.com" target="_blank">LINKEDIN</a>
   <a href="#">PORTFOLIO</a>
   <a href="mailto:Chaytonah@gmail.com">EMAIL</a>
 </div>
@@ -138,13 +111,122 @@ body {
   <div><div class="stat-num">40%</div><div class="stat-label">EFFICIENCY</div></div>
 </div>
 
-<!-- PANEL -->
 <div id="panel">
   <button id="close-btn">✕</button>
   <div id="panel-content"></div>
 </div>
 
-<script type="module" src="./main.js"></script>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+// SCENE
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x05070f);
+
+const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
+camera.position.set(0,2,12);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// CONTROLS
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.autoRotate = true;
+
+// LIGHT
+scene.add(new THREE.AmbientLight(0xffffff,0.6));
+
+// CARDS
+const labels = ["PROFILE","EXPERIENCE","SKILLS","EDUCATION","AWARDS"];
+const group = new THREE.Group();
+scene.add(group);
+
+labels.forEach((label,i)=>{
+  const canvas = document.createElement('canvas');
+  canvas.width = 600;
+  canvas.height = 300;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = "#0b1230";
+  ctx.fillRect(0,0,600,300);
+
+  ctx.font = "bold 50px Arial";
+  ctx.textAlign = "center";
+
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = "#000";
+  ctx.strokeText(label,300,160);
+
+  ctx.fillStyle = "#fff";
+  ctx.fillText(label,300,160);
+
+  const texture = new THREE.CanvasTexture(canvas);
+
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(4,2.5),
+    new THREE.MeshBasicMaterial({ map:texture, transparent:true })
+  );
+
+  mesh.position.x = (i-2)*5;
+  mesh.userData.label = label;
+
+  group.add(mesh);
+});
+
+// CLICK
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener('click',(e)=>{
+  mouse.x = (e.clientX/innerWidth)*2-1;
+  mouse.y = -(e.clientY/innerHeight)*2+1;
+
+  raycaster.setFromCamera(mouse,camera);
+  const hits = raycaster.intersectObjects(group.children);
+
+  if(hits.length>0){
+    showPanel(hits[0].object.userData.label);
+    controls.autoRotate = false;
+  }
+});
+
+// PANEL
+document.getElementById('close-btn').addEventListener('click',()=>{
+  document.getElementById('panel').classList.remove('active');
+  controls.autoRotate = true;
+});
+
+function showPanel(label){
+  const panel = document.getElementById('panel');
+  const content = document.getElementById('panel-content');
+
+  content.innerHTML = `
+    <h2>${label}</h2>
+    <p>Details coming soon...</p>
+  `;
+
+  panel.classList.add('active');
+}
+
+// ANIMATE
+function animate(){
+  requestAnimationFrame(animate);
+  group.rotation.y += 0.003;
+  controls.update();
+  renderer.render(scene,camera);
+}
+animate();
+
+// RESIZE
+window.addEventListener('resize',()=>{
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
+</script>
 
 </body>
 </html>

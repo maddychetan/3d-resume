@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chetan Holiyappa</title>
 
 <style>
@@ -19,7 +19,6 @@ body {
   position: fixed;
   top: 30px;
   left: 80px;
-  z-index: 10;
 }
 
 #header h1 {
@@ -65,60 +64,34 @@ body {
   font-size: 0.8rem;
 }
 
-/* ===== FINAL PANEL UI ===== */
+/* PANEL */
 #panel {
   position: fixed;
   top: 0;
   right: -420px;
   width: 420px;
   height: 100%;
-  background: rgba(10, 15, 35, 0.85);
+  background: rgba(10, 15, 35, 0.9);
   backdrop-filter: blur(18px);
-  border-left: 1px solid rgba(255,255,255,0.08);
-  transition: right 0.4s ease;
-  z-index: 50;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
+  transition: 0.4s;
+  padding: 25px;
 }
 
 #panel.active {
   right: 0;
 }
 
-#panel-content {
-  margin-top: 40px;
-  overflow-y: auto;
-}
-
 #close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  right: 10px;
+  top: 10px;
   border: none;
   background: none;
   color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-#panel h2 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-
-#panel p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: rgba(255,255,255,0.8);
-}
-
-#panel a {
-  color: #2af;
-  text-decoration: none;
+  font-size: 18px;
 }
 </style>
-  <script type="module" crossorigin src="/3d-resume/assets/index-Dk90iEJG.js"></script>
+  <script type="module" crossorigin src="/3d-resume/assets/index-DVqYUSGf.js"></script>
 </head>
 
 <body>
@@ -128,7 +101,7 @@ body {
 </div>
 
 <div id="top-links">
-  <a href="https://www.linkedin.com/in/caholiyappa/" target="_blank">LINKEDIN</a>
+  <a href="https://www.linkedin.com" target="_blank">LINKEDIN</a>
   <a href="#">PORTFOLIO</a>
   <a href="mailto:Chaytonah@gmail.com">EMAIL</a>
 </div>
@@ -139,7 +112,6 @@ body {
   <div><div class="stat-num">40%</div><div class="stat-label">EFFICIENCY</div></div>
 </div>
 
-<!-- PANEL -->
 <div id="panel">
   <button id="close-btn">✕</button>
   <div id="panel-content"></div>
