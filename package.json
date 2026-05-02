@@ -1,4 +1,3 @@
-@"
 {
   "name": "3d-resume",
   "version": "1.0.0",
@@ -18,6 +17,5 @@
   "devDependencies": {
     "vite": "5.2.11"
   },
-  "homepage": "https://YOUR_USERNAME.github.io/3d-resume/"
+  "homepage": "https://maddychetan.github.io/3d-resume/"
 }
-"@ | Out-File package.json -Encoding utf8
