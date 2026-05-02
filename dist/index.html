@@ -5,49 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Chetan Holiyappa</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
 body {
   margin: 0;
-  background: #05070f;
-  color: #fff;
-  font-family: 'Exo 2', sans-serif;
   overflow: hidden;
+  background: #05070f;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
 /* HEADER */
 #header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 40px 90px;
+  top: 30px;
+  left: 80px;
   z-index: 10;
 }
 
 #header h1 {
-  font-family: 'Orbitron';
-  font-size: 2.5rem;
-  letter-spacing: 0.4em;
+  font-size: 2.2rem;
+  letter-spacing: 0.3em;
   color: #2af;
 }
 
-.header-sub {
-  font-size: 0.9rem;
-  color: white;
-  margin-top: 10px;
-  letter-spacing: 0.3em;
-}
-
-/* RIGHT LINKS */
+/* LINKS */
 #top-links {
   position: fixed;
   top: 40px;
   right: 60px;
   display: flex;
   gap: 15px;
-  z-index: 20;
 }
 
 #top-links a {
@@ -56,7 +43,6 @@ body {
   border: 1px solid rgba(255,255,255,0.3);
   padding: 6px 12px;
   font-size: 0.7rem;
-  letter-spacing: 0.2em;
 }
 
 /* LEFT STATS */
@@ -67,88 +53,90 @@ body {
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  z-index: 20;
+  gap: 25px;
 }
 
 .stat-num {
   font-size: 3rem;
-  font-weight: bold;
   color: #2af;
 }
 
 .stat-label {
   font-size: 0.8rem;
-  color: white;
 }
 
-/* PANEL */
+/* ===== FINAL PANEL UI ===== */
 #panel {
   position: fixed;
-  right: -100%;
   top: 0;
-  width: 400px;
+  right: -420px;
+  width: 420px;
   height: 100%;
-  background: rgba(10,15,35,0.98);
-  transition: 0.3s;
+  background: rgba(10, 15, 35, 0.85);
+  backdrop-filter: blur(18px);
+  border-left: 1px solid rgba(255,255,255,0.08);
+  transition: right 0.4s ease;
   z-index: 50;
-  padding: 20px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 #panel.active {
   right: 0;
 }
 
-#close-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: white;
-  background: none;
-  border: none;
-  font-size: 18px;
+#panel-content {
+  margin-top: 40px;
+  overflow-y: auto;
 }
 
+#close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#panel h2 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+#panel p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+}
+
+#panel a {
+  color: #2af;
+  text-decoration: none;
+}
 </style>
-  <script type="module" crossorigin src="/3d-resume/assets/index-BYQH9bvV.js"></script>
+  <script type="module" crossorigin src="/3d-resume/assets/index-Dk90iEJG.js"></script>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div id="header">
   <h1>CHETAN HOLIYAPPA</h1>
-  <div class="header-sub">AI-DRIVEN TALENT ARCHITECT / GLOBAL HIRING / 10+ YEARS</div>
 </div>
 
-<!-- LINKS -->
 <div id="top-links">
   <a href="https://www.linkedin.com/in/caholiyappa/" target="_blank">LINKEDIN</a>
-  <a href="https://maddychetan.github.io/chetan-ai-talent-portfolio/" target="_blank">PORTFOLIO</a>
+  <a href="#">PORTFOLIO</a>
   <a href="mailto:Chaytonah@gmail.com">EMAIL</a>
 </div>
 
-<!-- STATS -->
 <div id="side-stats">
-  <div>
-    <div class="stat-num">10+</div>
-    <div class="stat-label">YEARS EXPERIENCE</div>
-  </div>
-
-  <div>
-    <div class="stat-num">95%</div>
-    <div class="stat-label">OFFER ACCEPTANCE</div>
-  </div>
-
-  <div>
-    <div class="stat-num">40%</div>
-    <div class="stat-label">HIRING EFFICIENCY</div>
-  </div>
-
-  <div>
-    <div class="stat-num">20%</div>
-    <div class="stat-label">DIVERSITY IMPACT</div>
-  </div>
+  <div><div class="stat-num">10+</div><div class="stat-label">YEARS</div></div>
+  <div><div class="stat-num">95%</div><div class="stat-label">SUCCESS</div></div>
+  <div><div class="stat-num">40%</div><div class="stat-label">EFFICIENCY</div></div>
 </div>
 
 <!-- PANEL -->
@@ -157,7 +145,6 @@ body {
   <div id="panel-content"></div>
 </div>
 
-<!-- SCRIPT -->
 
 </body>
 </html>
