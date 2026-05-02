@@ -1,232 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chetan Holiyappa</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chetan | 3D Resume</title>
 
-<style>
-body {
-  margin: 0;
-  overflow: hidden;
-  background: #05070f;
-  color: white;
-  font-family: Arial, sans-serif;
-}
+  <style>
+    body {
+      margin:0;
+      background:#060612;
+      overflow:hidden;
+      font-family:sans-serif;
+      color:#fff;
+    }
 
-/* HEADER */
-#header {
-  position: fixed;
-  top: 30px;
-  left: 80px;
-}
+    #panel {
+      position:fixed;
+      right:-400px;
+      top:50%;
+      transform:translateY(-50%);
+      width:320px;
+      background:#111;
+      padding:20px;
+      transition:0.4s;
+      border-left:2px solid #4488ff;
+    }
 
-#header h1 {
-  font-size: 2.2rem;
-  letter-spacing: 0.3em;
-  color: #2af;
-}
+    #panel.active { right:0; }
 
-/* LINKS */
-#top-links {
-  position: fixed;
-  top: 40px;
-  right: 60px;
-  display: flex;
-  gap: 15px;
-}
-
-#top-links a {
-  color: white;
-  text-decoration: none;
-  border: 1px solid rgba(255,255,255,0.3);
-  padding: 6px 12px;
-  font-size: 0.7rem;
-}
-
-/* LEFT STATS */
-#side-stats {
-  position: fixed;
-  left: 40px;
-  top: 60%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.stat-num {
-  font-size: 3rem;
-  color: #2af;
-}
-
-.stat-label {
-  font-size: 0.8rem;
-}
-
-/* PANEL */
-#panel {
-  position: fixed;
-  top: 0;
-  right: -420px;
-  width: 420px;
-  height: 100%;
-  background: rgba(10, 15, 35, 0.9);
-  backdrop-filter: blur(18px);
-  transition: 0.4s;
-  padding: 25px;
-}
-
-#panel.active {
-  right: 0;
-}
-
-#close-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  border: none;
-  background: none;
-  color: white;
-  font-size: 18px;
-}
-</style>
+    button {
+      background:#4488ff;
+      border:none;
+      padding:8px 12px;
+      color:#fff;
+      cursor:pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="header">
-  <h1>CHETAN HOLIYAPPA</h1>
-</div>
-
-<div id="top-links">
-  <a href="https://www.linkedin.com" target="_blank">LINKEDIN</a>
-  <a href="#">PORTFOLIO</a>
-  <a href="mailto:Chaytonah@gmail.com">EMAIL</a>
-</div>
-
-<div id="side-stats">
-  <div><div class="stat-num">10+</div><div class="stat-label">YEARS</div></div>
-  <div><div class="stat-num">95%</div><div class="stat-label">SUCCESS</div></div>
-  <div><div class="stat-num">40%</div><div class="stat-label">EFFICIENCY</div></div>
-</div>
-
 <div id="panel">
-  <button id="close-btn">✕</button>
-  <div id="panel-content"></div>
+  <button onclick="closePanel()">Close</button>
+  <div id="content"></div>
 </div>
 
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
-
-// SCENE
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x05070f);
-
-const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
-camera.position.set(0,2,12);
-
-const renderer = new THREE.WebGLRenderer({ antialias:true });
-renderer.setSize(innerWidth, innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// CONTROLS
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.autoRotate = true;
-
-// LIGHT
-scene.add(new THREE.AmbientLight(0xffffff,0.6));
-
-// CARDS
-const labels = ["PROFILE","EXPERIENCE","SKILLS","EDUCATION","AWARDS"];
-const group = new THREE.Group();
-scene.add(group);
-
-labels.forEach((label,i)=>{
-  const canvas = document.createElement('canvas');
-  canvas.width = 600;
-  canvas.height = 300;
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = "#0b1230";
-  ctx.fillRect(0,0,600,300);
-
-  ctx.font = "bold 50px Arial";
-  ctx.textAlign = "center";
-
-  ctx.lineWidth = 6;
-  ctx.strokeStyle = "#000";
-  ctx.strokeText(label,300,160);
-
-  ctx.fillStyle = "#fff";
-  ctx.fillText(label,300,160);
-
-  const texture = new THREE.CanvasTexture(canvas);
-
-  const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(4,2.5),
-    new THREE.MeshBasicMaterial({ map:texture, transparent:true })
-  );
-
-  mesh.position.x = (i-2)*5;
-  mesh.userData.label = label;
-
-  group.add(mesh);
-});
-
-// CLICK
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-window.addEventListener('click',(e)=>{
-  mouse.x = (e.clientX/innerWidth)*2-1;
-  mouse.y = -(e.clientY/innerHeight)*2+1;
-
-  raycaster.setFromCamera(mouse,camera);
-  const hits = raycaster.intersectObjects(group.children);
-
-  if(hits.length>0){
-    showPanel(hits[0].object.userData.label);
-    controls.autoRotate = false;
-  }
-});
-
-// PANEL
-document.getElementById('close-btn').addEventListener('click',()=>{
-  document.getElementById('panel').classList.remove('active');
-  controls.autoRotate = true;
-});
-
-function showPanel(label){
-  const panel = document.getElementById('panel');
-  const content = document.getElementById('panel-content');
-
-  content.innerHTML = `
-    <h2>${label}</h2>
-    <p>Details coming soon...</p>
-  `;
-
-  panel.classList.add('active');
-}
-
-// ANIMATE
-function animate(){
-  requestAnimationFrame(animate);
-  group.rotation.y += 0.003;
-  controls.update();
-  renderer.render(scene,camera);
-}
-animate();
-
-// RESIZE
-window.addEventListener('resize',()=>{
-  camera.aspect = innerWidth/innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
-});
-</script>
-
+<script type="module" src="./main.js"></script>
 </body>
 </html>
