@@ -1,175 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Chetan Holiyappa | 3D Resume</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chetan | 3D Resume</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin:0;
+      background:#060612;
+      overflow:hidden;
+      font-family:sans-serif;
+      color:#fff;
+    }
 
-<style>
-:root {
-  --blue:#2af;
-  --orange:#f60;
-  --bg:#05070f;
-}
+    #panel {
+      position:fixed;
+      right:-400px;
+      top:50%;
+      transform:translateY(-50%);
+      width:320px;
+      background:#111;
+      padding:20px;
+      transition:0.4s;
+      border-left:2px solid #4488ff;
+    }
 
-body {
-  margin:0;
-  background:var(--bg);
-  font-family:'Exo 2', sans-serif;
-  color:#fff;
-  overflow:hidden;
-}
+    #panel.active { right:0; }
 
-/* Canvas fix */
-canvas { display:block; position:relative; z-index:0; }
-
-/* HEADER */
-#header {
-  position:fixed;
-  top:0; left:0; right:0;
-  padding:18px 80px;
-  display:flex;
-  justify-content:space-between;
-  background:linear-gradient(180deg,rgba(5,7,15,0.95),transparent);
-  z-index:10;
-}
-
-#header h1{
-  font-family:'Orbitron';
-  font-size:1.8rem;
-  letter-spacing:0.35em;
-  background:linear-gradient(90deg,#2af,#fff,#f60);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  text-shadow:0 0 20px rgba(40,170,255,0.4);
-}
-
-.header-sub{
-  font-size:0.7rem;
-  letter-spacing:0.5em;
-  color:rgba(40,170,255,0.7);
-  margin-top:6px;
-}
-
-/* SIDE STATS */
-#side-stats{
-  position:fixed;
-  left:50px;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:26px;
-  z-index:20;
-  animation:slideInLeft 1s ease-out;
-}
-
-.stat-block{ text-align:center; }
-
-.stat-num{
-  font-family:'Orbitron';
-  font-size:2.4rem;
-  font-weight:900;
-  color:#2af;
-  text-shadow:
-    0 0 10px rgba(40,170,255,0.9),
-    0 0 25px rgba(40,170,255,0.5);
-  animation:glowPulse 2.5s infinite;
-}
-
-.stat-label{
-  font-size:0.7rem;
-  letter-spacing:0.2em;
-  color:rgba(40,170,255,0.9);
-}
-
-.stat-line{
-  width:1px;
-  height:18px;
-  background:linear-gradient(180deg,rgba(40,170,255,0.4),transparent);
-  margin:0 auto;
-}
-
-/* ANIMATIONS */
-@keyframes glowPulse{
-  0%,100%{text-shadow:0 0 10px rgba(40,170,255,0.6);}
-  50%{text-shadow:0 0 30px rgba(40,170,255,1);}
-}
-
-@keyframes slideInLeft{
-  from{ transform:translate(-80px,-50%); opacity:0;}
-  to{ transform:translate(0,-50%); opacity:1;}
-}
-
-</style>
+    button {
+      background:#4488ff;
+      border:none;
+      padding:8px 12px;
+      color:#fff;
+      cursor:pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div id="header">
-  <div>
-    <h1>CHETAN HOLIYAPPA</h1>
-    <p class="header-sub">AI-DRIVEN TALENT ARCHITECT / GLOBAL HIRING / 10+ YEARS</p>
-  </div>
+<div id="panel">
+  <button onclick="closePanel()">Close</button>
+  <div id="content"></div>
 </div>
 
-<!-- SIDE STATS -->
-<div id="side-stats">
-  <div class="stat-block">
-    <div class="stat-num">10+</div>
-    <div class="stat-label">YEARS EXPERIENCE</div>
-  </div>
-  <div class="stat-line"></div>
-
-  <div class="stat-block">
-    <div class="stat-num">95%</div>
-    <div class="stat-label">OFFER ACCEPTANCE</div>
-  </div>
-  <div class="stat-line"></div>
-
-  <div class="stat-block">
-    <div class="stat-num">40%</div>
-    <div class="stat-label">HIRING EFFICIENCY</div>
-  </div>
-  <div class="stat-line"></div>
-
-  <div class="stat-block">
-    <div class="stat-num">20%</div>
-    <div class="stat-label">DIVERSITY IMPACT</div>
-  </div>
-</div>
-
-<!-- 3D SCRIPT -->
-<script type="module" src="./assets/index-DOz4Mzd6.js"></script>
-
-<!-- COUNT UP SCRIPT -->
-<script>
-function animateValue(el,start,end,duration){
-  let startTime=null;
-  function update(time){
-    if(!startTime) startTime=time;
-    const progress=Math.min((time-startTime)/duration,1);
-    const value=Math.floor(progress*(end-start)+start);
-    el.textContent=value+(el.dataset.suffix||"");
-    if(progress<1) requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
-}
-
-window.addEventListener("load",()=>{
-  document.querySelectorAll(".stat-num").forEach(el=>{
-    const raw=el.textContent.replace(/\D/g,"");
-    const val=parseInt(raw||"0");
-    const suffix=el.textContent.replace(/[0-9]/g,"");
-    el.textContent="0";
-    el.dataset.suffix=suffix;
-    animateValue(el,0,val,1200);
-  });
-});
-</script>
-
+<script type="module" src="./main.js"></script>
 </body>
 </html>
